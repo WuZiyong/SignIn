@@ -1,0 +1,244 @@
+
+{% extends "base.pug" %}
+// Portfolio Section
+
+{% block title %}应用主页{% endblock %}
+{% load sass_tags %}
+{% block css %}
+script(src='/static/js/scripts.js')
+script(src='/static/js/fileinput/js/fileinput.min.js')
+link(href='/static/js/fileinput/css/fileinput.css', rel='stylesheet')
+script(src="/static/js/main.js")
+link(href="{% sass_src 'scss/main.scss' %}" rel="stylesheet" type="text/css")
+{% endblock %}
+
+
+
+{% block content %}
+section#portfolio.page-section.portfolio
+  .container
+    // Portfolio Section Heading
+    h2.page-section-heading.text-center.text-uppercase.text-secondary.mb-0 应用列表
+    // Icon Divider
+    .divider-custom
+      .divider-custom-line
+      .divider-custom-icon
+        i.fas.fa-star
+      .divider-custom-line
+    // Portfolio Grid Items
+    .row.justify-content-center
+      // Portfolio Item 1
+      //-.col-md-6.col-lg-4.mb-5
+        .portfolio-item.mx-auto(data-bs-toggle='modal' data-bs-target='#portfolioModal1')
+          .portfolio-item-caption.d-flex.align-items-center.justify-content-center.h-100.w-100
+            .portfolio-item-caption-content.text-center.text-white
+              i.fas.fa-plus.fa-3x
+          img.img-fluid.img-back(src='/static/media/img/portfolio/cabin.png' alt='...')
+          span.backcolp 学生签到
+      // Portfolio Item 2
+      //-.col-md-6.col-lg-4.mb-5
+        .portfolio-item.mx-auto(data-bs-toggle='modal' data-bs-target='#portfolioModal2')
+          .portfolio-item-caption.d-flex.align-items-center.justify-content-center.h-100.w-100
+            .portfolio-item-caption-content.text-center.text-white
+              i.fas.fa-plus.fa-3x
+          img.img-fluid.img-back(src='/static/media/img/portfolio/cake.png' alt='...')
+          span.backcolp 活动详情
+      // Portfolio Item 3
+      .col-md-6.col-lg-4.mb-5.createmeet
+        .portfolio-item.mx-auto
+          .portfolio-item-caption.d-flex.align-items-center.justify-content-center.h-100.w-100
+            .portfolio-item-caption-content.text-center.text-white
+              i.fas.fa-plus.fa-3x
+          img.img-fluid.img-back(src='/static/media/img/portfolio/circus.png' alt='...')
+          span.backcolp 生成活动
+      // Portfolio Item 4
+      .col-md-6.col-lg-4.mb-5.mb-lg-0.meetlist
+        .portfolio-item.mx-auto
+          .portfolio-item-caption.d-flex.align-items-center.justify-content-center.h-100.w-100
+            .portfolio-item-caption-content.text-center.text-white
+              i.fas.fa-plus.fa-3x
+          img.img-fluid.img-back(src='/static/media/img/portfolio/game.png' alt='...')
+          span.backcolp 活动列表
+      // Portfolio Item 5
+      .col-md-6.col-lg-4.mb-5.mb-md-0.setting
+        .portfolio-item.mx-auto
+          .portfolio-item-caption.d-flex.align-items-center.justify-content-center.h-100.w-100
+            .portfolio-item-caption-content.text-center.text-white
+              i.fas.fa-plus.fa-3x
+          img.img-fluid.img-back(src='/static/media/img/portfolio/safe.png' alt='...')
+          span.backcolp 设置
+      // Portfolio Item 6
+      //-.col-md-6.col-lg-4
+        .portfolio-item.mx-auto
+          .portfolio-item-caption.d-flex.align-items-center.justify-content-center.h-100.w-100
+            .portfolio-item-caption-content.text-center.text-white
+              i.fas.fa-plus.fa-3x
+          img.img-fluid.img-back(src='/static/media/img/portfolio/submarine.png' alt='...')
+          span.backcolp 开发中...
+
+
+section#activitylist.page-section
+  .container
+    // Contact Section Heading
+    h2.page-section-heading.text-center.text-uppercase.text-secondary.mb-0.fonthead 活动列表
+    // Icon Divider
+    .divider-custom
+      .divider-custom-line
+      .divider-custom-icon
+        i.fas.fa-star
+      .divider-custom-line
+    // Contact Section Form
+    .row.justify-content-center
+      .col-lg-8.col-xl-7 
+        table.table.table-hover
+          thead 
+            tr
+              th.w10 #
+              th.w35 活动名称
+              th.w35 活动时间
+              th.w10 应到人数 
+              th.w10 签到人数 
+          tbody#meetlist
+            {% for meet in data %}
+            tr.cur(meet="{{meet.fields.meet_uuid}}")
+              th.w10(scope="row") {{meet.fields.id}}
+              {% if not meet.fields.meet_theme == '' %}
+              td.w35 {{meet.fields.meet_theme}}:{{meet.fields.meet_name}}
+              {% else %}
+              td.w35 {{meet.fields.meet_name}}
+              {% endif %}
+              td.w35 {{meet.fields.meet_begin_time}}
+              td.w10 {{meet.fields.need_num}}
+              td.w10 {{meet.fields.exa_num}}
+            {% endfor %}
+            
+
+
+    
+          //-.form-floating
+            input#inputPhone.form-control(type='tel' placeholder='Enter your phone number...')
+            label(for='inputPhone') Phone Number
+          //-.form-floating
+            textarea#inputMessage.form-control(placeholder='Enter your message here...' style='height: 12rem')
+            label(for='inputMessage') Message
+    //- 页码翻页
+    {% if len != 1 %}
+    .row.justify-content-center 
+      ul.pagination.ulcenter
+        {% if page_num != 0 %}
+        li.page-item
+          a.page-link(href="?pgn={{page_num|add:-1}}") &laquo;
+        {% endif %}
+        {% if begin_judge < page_num %}
+        li.page-item
+          a.page-link(href="?pgn=0") 1
+        {% endif %}
+        {% if 1 < begin %}
+        li.page-item
+          a.page-omit ···
+        {% endif %}
+        {% for pgn in page_num_list %}
+        {% if pgn == page_num|add:1 %}
+        li.page-item.active
+          a.page-link(href="?pgn={{pgn|add:-1}}") {{ pgn }}
+        {% else %}
+        li.page-item
+          a.page-link(href="?pgn={{pgn|add:-1}}") {{ pgn }}
+        {% endif %}
+        {% endfor %}
+        {% if len|add:-2 > end %}
+        li.page-item
+          a.page-omit ···
+        {% endif %}
+        {% if end_judge > page_num %}
+        li.page-item
+          a.page-link(href="?pgn={{len|add:-1}}") {{len}}
+        {% endif %}
+        {% if page_num != len|add:-1 %}
+        li.page-item
+          a.page-link(href="?pgn={{page_num|add:1}}") &raquo;
+        {% endif %}
+      {% endif %}
+      //-br
+      //-button.btn.btn-primary.btn-xl(type='submit') 签到
+
+section#setting.page-section
+  .container
+    // Contact Section Heading
+    h2.page-section-heading.text-center.text-uppercase.text-secondary.mb-0.fonthead 设置
+    h2.page-section-heading.text-center.text-uppercase.text-secondary.mb-0.fontsub.martopsub 上传学生名单
+    // Icon Divider
+    .divider-custom
+      .divider-custom-line
+      .divider-custom-icon
+        i.fas.fa-star
+      .divider-custom-line
+    // Contact Section Form
+    .row.justify-content-center
+      .col-lg-8.col-xl-7
+        form#uploadform
+          //-.form-floating
+            input#inputName.form-control(type='text' placeholder='Enter your name...')
+            label(for='inputName') 姓名
+          //-.form-floating
+            input#inputId.form-control(type='number' placeholder='Enter your id...')
+            label(for='inputId') 学号
+          .form-floating
+            select.form-control.settingselect(placeholder='Enter your id...')
+              //option(selected) 
+              option(value="1" selected) 大一
+              option(value="2") 大二
+              option(value="3") 大三
+              option(value="4") 大四
+              option(value="5") 研一
+              option(value="6") 研二
+              option(value="7") 研三
+              option(value="8") 研四
+              option(value="9") 研五
+            label(for='inputId') 年级
+          //-.form-floating
+            input#inputPhone.form-control(type='tel' placeholder='Enter your phone number...')
+            label(for='inputPhone') Phone Number
+          //-.form-floating
+            textarea#inputMessage.form-control(placeholder='Enter your message here...' style='height: 12rem')
+            label(for='inputMessage') Message
+          br
+          .listfile 
+
+          br
+          .settingbuttons
+            .btn.btn-primary.btn-xl.settingbutton.uploadfilebutton(data-bs-toggle='modal' data-bs-target='#uploadModal') 上传文件
+            .btn.btn-primary.btn-xl.downloadfilebutton(type='submit') 下载文件
+
+
+
+#uploadModal.portfolio-modal.modal.fade(tabindex='-1' aria-labelledby='exampleModalLabel' aria-hidden='true')
+  .modal-dialog.modal-xl
+    .modal-content
+      .modal-header.border-0
+        //-h5#exampleModalLabel.modal-title 上传文件
+        button.btn-close(type='button' data-bs-dismiss='modal' aria-label='Close')
+          //-span(aria-hidden='true') x
+      .modal-body.text-center.pb-5
+        .container
+          .row.justify-content-center
+            .col-lg-8
+              h2.portfolio-modal-title.text-secondary.text-uppercase.mb-0 选择文件
+              .divider-custom
+                .divider-custom-line
+                .divider-custom-icon
+                  i.fas.fa-star
+                .divider-custom-line
+              form
+                .file-loading
+                    input#fileUpload(name="file", type="file" multiple)
+              #fileError
+              //-.modal-footer
+              br
+              button.btn.btn-primary#btnUpload(type='button', disabled='disabled') 上传
+              button.btn.btn-secondary(type='button', data-bs-dismiss='modal') 取消
+
+
+
+{% endblock %}
+

@@ -1,0 +1,66 @@
+{% extends "base.pug" %}
+// Portfolio Section
+
+{% block title %}活动详情{% endblock %}
+{% load sass_tags %}
+{% block css %}
+script(src='/static/js/scripts.js')
+script(src='/static/js/meetdetail.js')
+script(src="/static/js/jquery.qrcode.min.js")
+link(href="{% sass_src 'scss/meetdetail.scss' %}" rel="stylesheet" type="text/css")
+{% endblock %}
+
+{% block content %}
+section#activitydetail.page-section.bg-primary.text-white.mb-0(meet="{{fields.meet_uuid}}")
+  .container
+    // About Section Heading
+    h2.page-section-heading.text-center.text-uppercase.text-white 活动详情
+    // Icon Divider
+    .divider-custom.divider-light
+      .divider-custom-line
+      .divider-custom-icon
+        i.fas.fa-star
+      .divider-custom-line
+    // About Section Content
+    .row
+      .col-lg-4.ms-auto.acdetailleft
+        p.text-end.acdetailp
+          | 活动名称&nbsp&nbsp&nbsp
+        //-p.text-end.acdetailp.noborder
+          | &nbsp&nbsp&nbsp
+        p.text-end.acdetailp
+          | 活动时间&nbsp&nbsp&nbsp
+        p.text-end.acdetailp
+          | 应到人数&nbsp&nbsp&nbsp
+        p.text-end.acdetailp
+          | 签到人数&nbsp&nbsp&nbsp
+      .col-lg-4.me-auto.acdetailright
+        {% if not fields.meet_theme == '' %}
+        p.acdetailinfo.meetname(title="{{fields.meet_theme}}:{{fields.meet_name}}")
+          | {{fields.meet_theme}}:{{fields.meet_name}}
+        {% else %}
+        p.acdetailinfo.meetname(title="{{fields.meet_name}}")
+          | {{fields.meet_name}}
+        {% endif %}
+        p.acdetailinfo
+          | {{fields.meet_begin_time}}
+        p.acdetailinfo
+          | {{fields.need_num}}
+        p.acdetailinfo
+          | {{fields.exa_num}}
+    br
+    .row
+        #qrcode.code
+        .signina
+            a.signin-url(href="{{fields.url}}",target="_blank") 签到页面
+        
+    // About Section Button
+    br
+    .downloadbutton.mt-4
+      a.btn.btn-xl.btn-outline-light.downloadbuttona.downloadsignbutton
+        i.fas.fa-download.me-2
+        |                         下载签到表格
+      a.btn.btn-xl.btn-outline-light.downloadabsencebutton
+        i.fas.fa-download.me-2
+        |                         下载缺勤表格
+{% endblock %}

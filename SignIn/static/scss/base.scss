@@ -1,0 +1,57 @@
+@import "base/base";
+
+input:required {
+    // background-color:lightyellow;
+}
+
+input:required:invalid {
+    background-color: lightyellow;
+}
+
+.contain {
+    //width: 1440px;
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    min-height: 600px;
+}
+
+.container-top,
+.container-bottom {
+    //width: 220px;
+    width: 15%;
+    min-height: 600px;
+}
+
+
+
+footer {
+    width: 100%;
+    height: 40px;
+    /* footer的高度一定要是固定值*/
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    background: $grey;
+    padding-top: 5px;
+    z-index: 10;
+}
+
+.page-omit {
+    position: relative;
+    display: block;
+    padding: .5rem .75rem;
+    margin-left: -1px;
+    line-height: 1.25;
+    color: #007bff !important;
+    background-color: #fff;
+    border-left: 1px solid #dee2e6;
+    cursor: default;
+}
+
+// icon control
+i {
+    margin-right: 5px;
+}

@@ -1,0 +1,53 @@
+{% extends "base.pug" %}
+// Portfolio Section
+
+{% block title %}签到页面{% endblock %}
+{% load sass_tags %}
+{% block css %}
+script(src='/static/js/scripts.js')
+script(src='/static/js/util.js')
+script(src='/static/js/signin.js')
+script(src="/static/js/jquery.qrcode.min.js")
+link(href="{% sass_src 'scss/signin.scss' %}" rel="stylesheet" type="text/css")
+{% endblock %}
+
+{% block content %}
+section#signin.page-section(meet="{{fields.meet_uuid}}")
+  .container
+    // Contact Section Heading
+    {% if not fields.meet_theme == '' %}
+    h2.page-section-heading.text-center.text-uppercase.text-secondary.mb-0.fonthead {{fields.meet_theme}}
+    {% endif %}
+    h2.page-section-heading.text-center.text-uppercase.text-secondary.mb-0.fontsub.martopsub {{fields.meet_name}}
+    // Icon Divider
+    .divider-custom
+      .divider-custom-line
+      .divider-custom-icon
+        i.fas.fa-star
+      .divider-custom-line
+    // Contact Section Form
+    .row.justify-content-center
+      .col-lg-8.col-xl-7
+        form#signinform(onsubmit="return false;")
+          .form-floating
+            input#inputName.form-control(type='text' name='stu_name' placeholder='Enter your name...')
+            label(for='inputName') 姓名
+          .form-floating
+            input#inputId.form-control(type='number' name='stu_id' placeholder='Enter your id...')
+            label(for='inputId') 学号
+          //-.form-floating
+            input#inputPhone.form-control(type='tel' placeholder='Enter your phone number...')
+            label(for='inputPhone') Phone Number
+          //-.form-floating
+            textarea#inputMessage.form-control(placeholder='Enter your message here...' style='height: 12rem')
+            label(for='inputMessage') Message
+          br
+          button.signinbutton.btn.btn-primary.btn-xl 签到
+    br
+    br
+    .row.flex-col
+        #qrcode.code
+        br
+        .signina
+            a.signin-url(href="{{fields.url}}",target="_blank") 签到页面
+{% endblock %}
