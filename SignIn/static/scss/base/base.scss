@@ -1,0 +1,72 @@
+$blue: #66c5ed;
+$dark-blue: #60b3e0;
+$red: #e5397b;
+$light-blue: #a2e3f2;
+$grey: #f4f4f4;
+$border-grey: #c9caca;  //边框颜色
+$border-grey2: #efefef;
+$border-blue: #8cc2f2;
+$green: #36cebb;
+$dark-grey: #606060;
+$red2: #e03885;
+$font-black: #47515b;
+$font-grey: #727171;
+$font-dark-grey: #3e3a39;
+$danger: #f72662;
+$red3: #e51749;
+$female: #ea8068;
+$background-blue: rgba(0, 123, 255, 0.8);
+
+
+
+
+.btn-secondary {
+  color: $font-grey;
+  background-color: #ffffff;
+  border-color: $border-grey;
+  cursor: pointer;
+  user-select: none;
+  &:hover {
+    background-color: $grey;
+    color: $font-grey;
+    border-color: $border-grey;
+  }
+}
+.btn-thirdly {
+  color: $font-grey;
+  background-color: $grey;
+  border-color: $border-grey;
+  cursor: pointer;
+  user-select: none;
+  &:hover {
+    background-color: $font-grey;
+    color: white;
+    border-color: $border-grey;
+  }
+}
+.btn-forthly {
+  color: #fff;
+  background-color: $red2;
+  border-color: $red2!important;
+  cursor: pointer;
+  user-select: none;
+  &:hover {
+    background-color: $red3;
+    color: white;
+    border-color: $red3;
+  }
+}
+.btn-primary {
+  color: #fff;
+  background-color: $blue;
+  border-color: $blue;
+  cursor: pointer;
+  user-select: none;
+  &:hover {
+    background-color: $dark-blue;
+    border-color: $dark-blue;
+  }
+}
+.d-n{
+  display: none!important;
+}

@@ -1,0 +1,45 @@
+.downloadbutton {
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+  .downloadbutton .downloadbuttona {
+    margin-right: 2rem; }
+
+.acdetailp {
+  border-right: 0.125rem solid white;
+  font-weight: 400 !important;
+  font-size: 1.25rem; }
+
+.acdetailinfo {
+  font-size: 1.25rem;
+  font-weight: 350;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap; }
+
+.acdetailleft,
+.acdetailright {
+  width: 50% !important; }
+
+.noborder {
+  border: none !important; }
+
+.signin-url {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 1.2rem;
+  width: 22%; }
+
+.signina {
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+
+.code {
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+
+/*# sourceMappingURL=meetdetail.css.map */

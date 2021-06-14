@@ -1,0 +1,23 @@
+.fonthead {
+  font-size: 2rem !important; }
+
+.fontsub {
+  font-size: 1.6rem !important; }
+
+.martopsub {
+  margin-top: 0.5rem; }
+
+.signina {
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+
+.code {
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+
+.flex-col {
+  flex-direction: column; }
+
+/*# sourceMappingURL=signin.css.map */
