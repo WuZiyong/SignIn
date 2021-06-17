@@ -25,4 +25,5 @@ urlpatterns = [
     url(r'^media/(?P<path>.*)$', static.serve, {'document_root': settings.MEDIA_ROOT}, name = 'static'),
     path('', include('apps.sign.urls')),
     path('', include('apps.file.urls')),
+    path('', include('apps.login.urls')),
 ]
