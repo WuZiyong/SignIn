@@ -40,6 +40,9 @@
         font-size: 1.25rem;
         opacity: 0.8; }
 
+.paddtop1 {
+  padding-top: 1rem !important; }
+
 .attendcheckrowend {
   font-size: 1rem;
   line-height: 1.5;
