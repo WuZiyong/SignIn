@@ -1,0 +1,87 @@
+{% extends 'base.pug' %}
+
+{% block title %}注册{% endblock %}
+{% block css %}
+<style>
+    .ctrl-radio {
+        display: flex;
+        justify-content: space-between !important;
+    }
+</style>
+{% endblock %}
+
+
+{% block content %}
+<div class="container justify-content-center" style="max-width: 500px;">
+    <!-- <div> -->
+    <form class='form-register' action="/register/" method="post" style="margin-top:20px;">
+
+        {% if message %}
+        <div class="alert alert-warning">{{ message }}</div>
+        {% endif %}
+
+        {% csrf_token %}
+
+        <h2 class="text-center">注册</h2>
+        <div class="form-group">
+            <!-- {{ register_form.username.label_tag }} -->
+            {{ register_form.username}}
+        </div>
+        <div class="form-group">
+            <!-- {{ register_form.stu_id.label_tag }} -->
+            {{ register_form.stu_id }}
+        </div>
+        <div class="form-group">
+            <!-- {{ register_form.email.label_tag }} -->
+            {{ register_form.email }}
+        </div>
+        <div class="form-group">
+            <!-- {{ register_form.password1.label_tag }} -->
+            {{ register_form.password1 }}
+        </div>
+        <div class="form-group">
+            <!-- {{ register_form.password2.label_tag }} -->
+            {{ register_form.password2 }}
+        </div>
+        <div>
+            <!-- {{ register_form.department.label_tag }} -->
+            <div class="ctrl-radio">
+                <span>部门：</span>
+                {% for radio in register_form.department %}
+                {%if forloop.counter0 < max_department_show%}
+                <span class="levelradio" style='margin-left:5px;'>
+                    <label style='margin-left:5px;'>
+                        {{ radio }}
+                    </label>
+                </span>
+                {%endif%}
+                {% endfor %}
+            </div>
+            <!-- {{ register_form.level }} -->
+        </div>
+        <div class="form-group">
+            <!-- {{ register_form.level.label_tag }} -->
+            <div>
+                <span>职级：</span>
+                {% for radio in register_form.level %}
+                {%if forloop.counter0 < max_level_show%}
+                <span class="levelradio" style='margin-left:5px;'>
+                    <!-- <input type="radio" name="level" value="{{radio.counter}}"> -->
+                    <label style='margin-left:5px;'>
+                        {{ radio }}
+                    </label>
+                </span>
+                {%endif%}
+                {% endfor %}
+            </div>
+            <!-- {{ register_form.level }} -->
+        </div>
+
+        <div class='justify-content-center' style='display:flex;'>
+            <button type="reset" class="btn btn-default pull-left" style='margin:30px;margin-top:10px;'>重置</button>
+            <button type="submit" class="btn btn-primary pull-right" style='margin:30px;margin-top:10px;'>注册</button>
+        </div>
+    </form>
+</div>
+</div> <!-- /container -->
+{% endblock %}

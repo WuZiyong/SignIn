@@ -1,0 +1,98 @@
+doctype html
+head
+  meta(charset='utf-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no')
+  meta(name='description' content='')
+  meta(name='author' content='')
+  title 主页
+  // Favicon
+  link(rel='icon' type='image/x-icon' href='/static/media/favicon.ico')
+  // Font Awesome icons (free version)
+  script(src='https://use.fontawesome.com/releases/v5.15.3/js/all.js' 
+  crossorigin='anonymous')
+  
+  script(src="/static/js/jquery-3.4.1.min.js")
+  script(src="/static/js/jquery.tmpl.min.js")
+  script(src="/static/js/bootstrap/bootstrap.min.js")
+  
+  script(src="/static/js/layer/layer.js")
+  
+
+  // Google fonts
+  //-link(href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css')
+  //-link(href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css')
+
+  // Core theme CSS (includes Bootstrap)
+  link(href="/static/css/bootstrap/bootstrap.min.css" rel="stylesheet")
+  link(href='/static/css/styles.css' rel='stylesheet')
+  //-link(href="/static/css/jquery-editable-select.css" rel="stylesheet" type="text/css")
+  
+
+  {% block css %}{% endblock %}
+// Navigation
+nav#mainNav.navbar.navbar-expand-lg.bg-secondary.text-uppercase.fixed-top
+  .container
+    a.navbar-brand(href='#page-top') sysu 物理与天文学院
+
+
+        
+
+// Masthead
+header.masthead.bg-primary.text-white.text-center
+  .container.d-flex.align-items-center.flex-column
+    // Masthead Avatar Image
+    img.masthead-avatar.mb-5(src='/static/media/symbol.png' alt='...')
+    // Masthead Heading
+    h1.masthead-heading.text-uppercase.mb-0 sysu 物理与天文学院
+    // Icon Divider
+    .divider-custom.divider-light
+      .divider-custom-line
+      .divider-custom-icon
+        i.fas.fa-star
+      .divider-custom-line
+    // Masthead Subheading
+    p.masthead-subheading.font-weight-light.mb-0 签到系统
+    br
+    div.justify-content-around.d-flex(style='width: 60%;')
+      a(href="/register/")
+        button.btn.btn-secondary 注册
+      a(href="/login/")
+        button.btn.btn-primary 登录
+
+// Footer
+footer.footer.text-center
+  .container
+    .row
+      // Footer Location
+      .col-lg-4.mb-5.mb-lg-0
+        h4.text-uppercase.mb-4 Location
+        p.lead.mb-0
+          | 广东省珠海市香洲区
+          br
+          |               中山大学珠海校区物理与天文学院                                      
+      // Footer Social Icons
+      .col-lg-4.mb-5.mb-lg-0
+        h4.text-uppercase.mb-4 Join Us
+        p.lead.mb-0
+          |  欢迎加入
+          br
+          |               中山大学物理与天文学院  
+        //- a.btn.btn-outline-light.btn-social.mx-1(href='#!')
+        //-   i.fab.fa-fw.fa-facebook-f
+        //- a.btn.btn-outline-light.btn-social.mx-1(href='#!')
+        //-   i.fab.fa-fw.fa-twitter
+        //- a.btn.btn-outline-light.btn-social.mx-1(href='#!')
+        //-   i.fab.fa-fw.fa-linkedin-in
+        //- a.btn.btn-outline-light.btn-social.mx-1(href='#!')
+        //-   i.fab.fa-fw.fa-dribbble
+      // Footer About Text
+      .col-lg-4
+        h4.text-uppercase.mb-4 About Us
+        p.lead.mb-0
+          | For more information, please visit 
+          a(href='http://spa.sysu.edu.cn') the website
+          |                             or send email to wuzy55@mail2.sysu.edu.cn.
+// Copyright Section
+.copyright.py-4.text-center.text-white
+  .container
+    small Copyright &copy; SYSU SPA
