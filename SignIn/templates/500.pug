@@ -1,0 +1,22 @@
+{% extends 'base.pug' %}
+
+{% load sass_tags %}
+{% block title %}500页面{% endblock %}
+
+
+
+{% block css %}
+link(href="{% sass_src 'scss/error.scss' %}" rel="stylesheet" type="text/css")
+{% endblock %}
+
+
+{% block content %}
+.d-flex.container.justify-content-center.flex-column
+    .flex-center.cart
+        .cart-name 500 Internal Error
+        .cart-subname 对不起,服务器出错啦😢
+
+
+
+
+{% endblock %}

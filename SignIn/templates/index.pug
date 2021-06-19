@@ -4,7 +4,7 @@ head
   meta(name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no')
   meta(name='description' content='')
   meta(name='author' content='')
-  title {% block title %}{% endblock %}
+  title 主页
   // Favicon
   link(rel='icon' type='image/x-icon' href='/static/media/favicon.ico')
   // Font Awesome icons (free version)
@@ -33,45 +33,8 @@ head
 nav#mainNav.navbar.navbar-expand-lg.bg-secondary.text-uppercase.fixed-top
   .container
     a.navbar-brand(href='#page-top') sysu 物理与天文学院
-    button.navbar-toggler.text-uppercase.font-weight-bold.bg-primary.text-white.rounded(type='button' data-bs-toggle='collapse' data-bs-target='#navbarResponsive' aria-controls='navbarResponsive' aria-expanded='false' aria-label='Toggle navigation')
-      | Menu
-      i.fas.fa-bars
-    #navbarResponsive.collapse.navbar-collapse
-      {% if signin == 1 %}
-      ul.navbar-nav.ms-auto
-        li.nav-item.mx-0.mx-lg-1
-          a.nav-link.py-3.px-0.px-lg-3.rounded(href='/signin/{{fields.meet_uuid}}')  签到页面
-      {% elif signin == 2 %}
-      ul.navbar-nav.ms-auto
-        li.nav-item.mx-0.mx-lg-1
-          a.nav-link.py-3.px-0.px-lg-3.rounded(href='/login/')  登录页面
-        li.nav-item.mx-0.mx-lg-1
-          a.nav-link.py-3.px-0.px-lg-3.rounded(href='/register/')  注册页面
-        li.nav-item.mx-0.mx-lg-1
-          a.nav-link.py-3.px-0.px-lg-3.rounded(href='/index/')  主页
-      {% else %}
-      ul.navbar-nav.ms-auto
-        li.nav-item.mx-0.mx-lg-1
-          a.nav-link.py-3.px-0.px-lg-3.rounded(href='/main/')  应用主页
-        //-li.nav-item.mx-0.mx-lg-1
-          a.nav-link.py-3.px-0.px-lg-3.rounded(href='#about') About
-        //-li.nav-item.mx-0.mx-lg-1
-          a.nav-link.py-3.px-0.px-lg-3.rounded(href='#signin') 学生签到
-        li.nav-item.mx-0.mx-lg-1
-          a.nav-link.py-3.px-0.px-lg-3.rounded(href='/createmeet/') 生成活动
-        li.nav-item.mx-0.mx-lg-1
-          a.nav-link.py-3.px-0.px-lg-3.rounded(href='/main/#activitylist') 活动列表
-        //-li.nav-item.mx-0.mx-lg-1
-          a.nav-link.py-3.px-0.px-lg-3.rounded(href='#activitydetail') 活动详情
-        li.nav-item.mx-0.mx-lg-1
-          a.nav-link.py-3.px-0.px-lg-3.rounded(href='/main/#setting') 设置
-        li.nav-item.mx-0.mx-lg-1
-          a.nav-link.py-3.px-0.px-lg-3.rounded(href='/modify-password/') 修改密码
-        li.nav-item.mx-0.mx-lg-1
-          a.nav-link.py-3.px-0.px-lg-3.rounded(href='/logout/') 退出
-        //-li.nav-item.mx-0.mx-lg-1
-          a.nav-link.py-3.px-0.px-lg-3.rounded(href='#stulist') 学生列表
-      {% endif %}
+
+
         
 
 // Masthead
@@ -89,13 +52,12 @@ header.masthead.bg-primary.text-white.text-center
       .divider-custom-line
     // Masthead Subheading
     p.masthead-subheading.font-weight-light.mb-0 签到系统
-
-
-{% block content %}
-{% endblock %}
-
-
-
+    br
+    div.justify-content-around.d-flex(style='width: 60%;')
+      a(href="/register/")
+        button.btn.btn-secondary 注册
+      a(href="/login/")
+        button.btn.btn-primary 登录
 
 // Footer
 footer.footer.text-center

@@ -83,7 +83,10 @@ $(function () {
                     // location.reload();
                     console.log('response.status: ',response.status)
                     if (response.status == 200) {
-                        layer.msg('提交完成');
+                        //layer.msg('提交完成');
+                        console.log(response);
+                        meet_uuid = response.meet_uuid;
+                        window.location.href = '/meetdetail/'+meet_uuid;
                     } else {
                         layer.msg(response.msg)
                     }

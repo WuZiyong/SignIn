@@ -1,5 +1,5 @@
 from apps.file.views import transfer_time
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.http import JsonResponse
 from django.core import serializers
 import uuid
@@ -20,6 +20,7 @@ from django.utils.http import urlquote
 
 
 
+
 def ormToJson(ormData):
     '''数据转换器'''
     jsonData = serializers.serialize("json", ormData)
@@ -31,8 +32,11 @@ def ormToJson(ormData):
 def main(request):
     '''应用主页面渲染'''
     #print(status)
+    if not request.session.get('is_login', None):
+        return redirect("/index/")
+
     page_num = request.GET.get('pgn')
-    meet_info = Meeting.objects.filter().order_by('create_time')
+    meet_info = Meeting.objects.filter().order_by('-create_time')
     transfer_data = prepare_data_with_pages(meet_info, page_num)
     #print('Hello World!')
     # test_push_insert_new_line()
@@ -41,6 +45,8 @@ def main(request):
 
 def createmeet(request):
     '''生成活动页面渲染'''
+    if not request.session.get('is_login', None):
+        return redirect("/index/")
     #print(status)
     #print('Hello World!')
     # test_push_insert_new_line()
@@ -88,6 +94,8 @@ def getMeetingDetail(meet_uuid):
 
 def meetdetail(request,meet_uuid):
     '''详情页面渲染'''
+    if not request.session.get('is_login', None):
+        return redirect("/index/")
     (data,state)=getMeetingDetail(meet_uuid)
     if state:
         if SERVER_IP == '':
@@ -115,7 +123,7 @@ def prepare_data_with_pages(pushData, page_num, push_per_page=PUSH_PER_PAGE, max
     except:
         page_num = 0
     # page_num = 0 if not isinstance(page_num, int) else
-    # logger.info(page_num)
+    # print(page_num)
     length = ceil(len(pushData) / push_per_page)  # 总页数
     page_num = min(length - 1, page_num)  # 防止超页码
 
@@ -217,7 +225,7 @@ def newmeet(request):
 
 
 def newsign(request):
-    '''新的活动提交'''
+    '''新的签到提交'''
     if request.method == 'POST':
         post = request.POST
         stu_id = post.get('stu_id')
@@ -232,10 +240,10 @@ def newsign(request):
                 'status': 404,
             }
             return JsonResponse(data)
-        meet_begin_time = meet_info.meet_begin_time#.strftime('%Y-%m-%d %H:%M:%S')
-        meet_end_time = meet_info.meet_end_time#.strftime('%Y-%m-%d %H:%M:%S')
+        meet_begin_time = meet_info.meet_begin_time.strftime('%Y-%m-%d %H:%M:%S')
+        meet_end_time = meet_info.meet_end_time.strftime('%Y-%m-%d %H:%M:%S')
         cst_tz = timezone('Asia/Shanghai')
-        now = datetime.now().astimezone(cst_tz)#.strftime('%Y-%m-%d %H:%M:%S')  
+        now = datetime.now().astimezone(cst_tz).strftime('%Y-%m-%d %H:%M:%S')  
         print('===============================================')
         print('meet_begin_time: ',meet_begin_time)
         print('meet_end_time: ',meet_end_time)
@@ -427,7 +435,7 @@ def download(request,grade):
     if request.method == 'GET':
         #current_operator = request.session.get('user_name')
         #current_level = request.session.get('user_level')
-        #logger.info('download resource_uuid: ', resource_uuid)
+        #print('download resource_uuid: ', resource_uuid)
         #resource_uuid = ''.join(resource_uuid.split('-'))
         file_info = FileInfo.objects.filter(grade = grade)
         #判断文件是否存在

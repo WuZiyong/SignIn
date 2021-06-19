@@ -10,6 +10,7 @@ script(src='/static/js/createmeet.js')
 link(href="{% sass_src 'scss/createmeet.scss' %}" rel="stylesheet" type="text/css")
 {% endblock %}
 
+
 {% block content %}
 section#create.page-section
   .container
@@ -57,10 +58,7 @@ section#create.page-section
               .attendcheckitem
                 input.form-check-input.attendcheckinput.checkundergraduate(type="checkbox" value="")
                 Option 全部本科生
-              .attendcheckitem
-                input.form-check-input.attendcheckinput.checkall(type="checkbox" value="")
-                Option 全院
-            .attendcheckrow.attendcheckrowend
+            .attendcheckrow.paddtop1
               .attendcheckitem
                 input.form-check-input.attendcheckinput.checkfive.checkgrad(type="checkbox" value="5" name="need_grade")
                 Option 研一
@@ -79,6 +77,11 @@ section#create.page-section
               .attendcheckitem
                 input.form-check-input.attendcheckinput.checkgraduate(type="checkbox" value="")
                 Option 全部研究生
+            .attendcheckrow.attendcheckrowend
+              .attendcheckitem
+                input.form-check-input.attendcheckinput.checkall(type="checkbox" value="")
+                Option 全院
+              
             
           //-.form-floating
             input#inputPhone.form-control(type='tel' placeholder='Enter your phone number...')

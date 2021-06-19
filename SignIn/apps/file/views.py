@@ -8,13 +8,14 @@ from django.utils.http import urlquote
 #from apps.logger import logger
 import uuid
 import json
-from .models import FileInfo,grade_trans
+from .models import FileInfo
 from .forms import UploadForm
 import os
 from SignIn.settings import MEDIA_ROOT
 import datetime
 import pytz
 import pandas as pd
+from .util import grade_trans
 from apps.sign.models import Student
 
 
@@ -58,9 +59,15 @@ def upload(request):
                     print('modify_file: ',modify_file)
                     resource_uuid = modify_file.resource_uuid
                     print('modify_resources_uuid: ',resource_uuid)
-                    modify_file.delete()
+                    #删除文件以及文件夹
                     os.remove(modify_file.file_path)
-                    print('-----modify_file deleted succsessfully-----')
+                    dele = delefile(grade)
+                    modify_file.delete()
+                    if dele:
+                        print('-----modify_file deleted succsessfully-----')
+                    else:
+                        print('-----modify_file deleted unsuccsessfully-----')
+                        return JsonResponse({'status':400,'msg':'删除失败'})
                     rewrite=1
                 try:
                     (file,filepath) = upload_file(grade, f,resource_uuid,upload_people)
@@ -68,7 +75,7 @@ def upload(request):
                     # 判断是否有覆盖文件的问题
                     if rewrite==1:
                         data=delestu(grade=grade)
-                    load=loadstufromfile(filepath=filepath,extension=file['file_name'].split('.')[-1],grade=grade)
+                    load,warning=loadstufromfile(filepath=filepath,extension=file['file_name'].split('.')[-1],grade=grade)
                     filelist.append(file)
                     print('--new file saved---')
                 except Exception as e:
@@ -77,7 +84,10 @@ def upload(request):
                     return HttpResponse(e)
             #返回上传页
             if data is None and load == True:
-                data = {'files': filelist,'status':200}
+                if warning is None:
+                    data = {'files': filelist,'status':200,'msg':'上传成功'}
+                else:
+                    data = {'files': filelist,'status':200,'msg':f"上传的学生名单与{grade_trans[warning-1]}存在名单冲突，建议更改旧名单"}
             elif data is None and load == False:
                 data = {'files': filelist,'status':400,'msg':'文件格式错误或年级不存在'}
             print('respond data: ',data)
@@ -174,27 +184,42 @@ def upload_file(grade, f, suid, upload_people):
 
 #加载excel内数据创建学生 若不存在学生则创建 若存在则先删除再创建
 def loadstufromfile(filepath,extension,grade):
+    warning = None
     if extension == 'csv':
         df = pd.read_csv(filepath)
     elif extension == 'xls' or extension == 'xlsx':
         df = pd.read_excel(filepath)
     else:
-        return False
+        return False,warning
     col = df.shape[1]
     df.columns = ['name','id']+list(range(col-2))
     names = df['name']
     ids = df['id']
     lens = df.shape[0]
     if not addtoalnumtofile(lens,grade):
-        return False
+        return False,warning
     for index in range(lens):
         student = Student.objects.filter(stu_id=ids[index])
+        #如果上传的学生年级与存在学生年级不一致
+        #返回一个警告冲突
         if student.exists():
             #student = Student.objects.get(stu_id=ids[index])
+            print('=============================================')
+            print(student[0].stu_grade == grade)
+            print(student[0].stu_grade)
+            print(grade)
+            if not student[0].stu_grade == grade:
+                warning = student[0].stu_grade
+                #出现冲突时 将冲突的文件和文件数据库中的文件删除
+                try:
+                    FileInfo.objects.get(grade = int(warning) ).delete()
+                    delefile(warning)
+                except Exception as e:
+                    print(e)
             student.delete()
         student = Student(stu_name=names[index],stu_id=ids[index],stu_grade=grade)
         student.save()
-    return True
+    return True,warning
 
 
 
@@ -216,6 +241,7 @@ def delestu(grade=None,id=None):
         'status':200,
     }
     if not grade is None:
+        print('grade: ',grade)
         student=Student.objects.filter(stu_grade=grade)
         if student.exists():
             student.delete()
@@ -240,6 +266,18 @@ def delestu(grade=None,id=None):
             }
 
     return data
+
+# 删除上传的文件 (rewrite 需要把之前的文件删除 文件冲突时需要把旧文件删除)
+def delefile(grade):
+    root = f"{MEDIA_ROOT}/resource"
+    filepath = root+f"/{grade_trans[grade-1]}"
+    try:
+        os.system(f"rm -rf {filepath}")
+        return True
+    except Exception as e:
+        print(e)
+        return False
+
 
 
 
