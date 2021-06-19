@@ -90,6 +90,7 @@ section#activitylist.page-section
     // Contact Section Form
     .row.justify-content-center
       .col-lg-8.col-xl-7 
+        {% if not num == 0 %}
         table.table.table-hover
           thead 
             tr
@@ -121,46 +122,51 @@ section#activitylist.page-section
           //-.form-floating
             textarea#inputMessage.form-control(placeholder='Enter your message here...' style='height: 12rem')
             label(for='inputMessage') Message
-    //- 页码翻页
-    {% if len != 1 %}
-    .row.justify-content-center 
-      ul.pagination.ulcenter
-        {% if page_num != 0 %}
-        li.page-item
-          a.page-link(href="?pgn={{page_num|add:-1}}") &laquo;
+      //- 页码翻页
+      br
+      {% if len != 1 %}
+      .row.justify-content-center 
+        ul.pagination.ulcenter
+          {% if page_num != 0 %}
+          li.page-item
+            a.page-link(href="?pgn={{page_num|add:-1}}") &laquo;
+          {% endif %}
+          {% if begin_judge < page_num %}
+          li.page-item
+            a.page-link(href="?pgn=0") 1
+          {% endif %}
+          {% if 1 < begin %}
+          li.page-item
+            a.page-omit ···
+          {% endif %}
+          {% for pgn in page_num_list %}
+          {% if pgn == page_num|add:1 %}
+          li.page-item.active
+            a.page-link(href="?pgn={{pgn|add:-1}}") {{ pgn }}
+          {% else %}
+          li.page-item
+            a.page-link(href="?pgn={{pgn|add:-1}}") {{ pgn }}
+          {% endif %}
+          {% endfor %}
+          {% if len|add:-2 > end %}
+          li.page-item
+            a.page-omit ···
+          {% endif %}
+          {% if end_judge > page_num %}
+          li.page-item
+            a.page-link(href="?pgn={{len|add:-1}}") {{len}}
+          {% endif %}
+          {% if page_num != len|add:-1 %}
+          li.page-item
+            a.page-link(href="?pgn={{page_num|add:1}}") &raquo;
+          {% endif %}
         {% endif %}
-        {% if begin_judge < page_num %}
-        li.page-item
-          a.page-link(href="?pgn=0") 1
-        {% endif %}
-        {% if 1 < begin %}
-        li.page-item
-          a.page-omit ···
-        {% endif %}
-        {% for pgn in page_num_list %}
-        {% if pgn == page_num|add:1 %}
-        li.page-item.active
-          a.page-link(href="?pgn={{pgn|add:-1}}") {{ pgn }}
-        {% else %}
-        li.page-item
-          a.page-link(href="?pgn={{pgn|add:-1}}") {{ pgn }}
-        {% endif %}
-        {% endfor %}
-        {% if len|add:-2 > end %}
-        li.page-item
-          a.page-omit ···
-        {% endif %}
-        {% if end_judge > page_num %}
-        li.page-item
-          a.page-link(href="?pgn={{len|add:-1}}") {{len}}
-        {% endif %}
-        {% if page_num != len|add:-1 %}
-        li.page-item
-          a.page-link(href="?pgn={{page_num|add:1}}") &raquo;
-        {% endif %}
+        //-br
+        //-button.btn.btn-primary.btn-xl(type='submit') 签到
+      {% else %}
+      .row.justify-content-center.noactivity 暂无活动
       {% endif %}
-      //-br
-      //-button.btn.btn-primary.btn-xl(type='submit') 签到
+
 
 section#setting.page-section
   .container

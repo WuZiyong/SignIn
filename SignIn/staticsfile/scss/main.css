@@ -182,4 +182,11 @@ button.close {
   text-decoration-style: initial;
   text-decoration-color: initial; }
 
+.noactivity {
+  font-size: 1.5rem;
+  color: #2c3e50 !important;
+  text-transform: uppercase !important;
+  font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-weight: 900; }
+
 /*# sourceMappingURL=main.css.map */
