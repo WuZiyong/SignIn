@@ -136,9 +136,6 @@
   display: flex;
   flex-direction: row; }
 
-.file-caption-name {
-  width: 70% !important; }
-
 .fileinput-remove {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0; }

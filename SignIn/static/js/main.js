@@ -106,6 +106,7 @@ $(function () {
         var data = {
             'grade':grade,
         }
+        $('#fileUpload').fileinput('destroy');
         UploadWidget(url, data, UploadRender, {});
     })
     
@@ -115,11 +116,12 @@ $(function () {
         if (response.status === 200) {
             //var files = response.files;
             //add_file_icon(files);
-            layer.msg('上传成功!');
+            layer.msg(response.msg);
         } else {
             console.log(response.msg);
             $("#fileUpload").fileinput('clear');
         }
+
     }
 
 

@@ -36,7 +36,7 @@ def main(request):
         return redirect("/index/")
 
     page_num = request.GET.get('pgn')
-    meet_info = Meeting.objects.filter().order_by('create_time')
+    meet_info = Meeting.objects.filter().order_by('-create_time')
     transfer_data = prepare_data_with_pages(meet_info, page_num)
     #print('Hello World!')
     # test_push_insert_new_line()
@@ -225,7 +225,7 @@ def newmeet(request):
 
 
 def newsign(request):
-    '''新的活动提交'''
+    '''新的签到提交'''
     if request.method == 'POST':
         post = request.POST
         stu_id = post.get('stu_id')
@@ -240,10 +240,10 @@ def newsign(request):
                 'status': 404,
             }
             return JsonResponse(data)
-        meet_begin_time = meet_info.meet_begin_time#.strftime('%Y-%m-%d %H:%M:%S')
-        meet_end_time = meet_info.meet_end_time#.strftime('%Y-%m-%d %H:%M:%S')
+        meet_begin_time = meet_info.meet_begin_time.strftime('%Y-%m-%d %H:%M:%S')
+        meet_end_time = meet_info.meet_end_time.strftime('%Y-%m-%d %H:%M:%S')
         cst_tz = timezone('Asia/Shanghai')
-        now = datetime.now().astimezone(cst_tz)#.strftime('%Y-%m-%d %H:%M:%S')  
+        now = datetime.now().astimezone(cst_tz).strftime('%Y-%m-%d %H:%M:%S')  
         print('===============================================')
         print('meet_begin_time: ',meet_begin_time)
         print('meet_end_time: ',meet_end_time)

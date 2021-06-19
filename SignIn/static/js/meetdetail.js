@@ -74,9 +74,12 @@ $(function () {
             $.ajax({
                 url: '/meet/download/?meet_uuid=' + meet_uuid+'&type='+type,
                 type: 'GET',
-            }).done(function () {
+            }).done(function (event, data) {
+                var response = data.response;
                 creatLink(meet_uuid, type);
                 layer.close(index);
+                layer.msg(response.msg);
+                console.log(response);
                 
             });
         }, function () {
