@@ -94,12 +94,15 @@ def logout(request):
 def modify_password(request):
     if not request.session.get('is_login', None):
         return redirect('/index')
-    
     if request.method == "POST":
+        print('===================')
         post = request.POST
         original_pwd = post.get('original_pwd')
         new_pwd1 = post.get('new_pwd1')
         new_pwd2 = post.get('new_pwd2')
+        print(original_pwd)
+        print(new_pwd1)
+        print(new_pwd2)
         if new_pwd1 != new_pwd2:
             message = "两次输入的密码不一致！😅"
             return render(request, 'modify_password.pug', locals())
