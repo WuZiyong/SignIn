@@ -99,5 +99,34 @@ $(function () {
             view: window
         }));
     }
+
+    /**
+     *  点击事件 删除活动
+     */
+    $('.deleteactivitybutton').on('click', function () {
+        var meet_uuid = $('#activitydetail').attr('meet');
+        var meet_name = $('.meetname').attr('title');
+        var index = layer.confirm('是否删除活动' + meet_name + "?", {
+            btn: ['删除', '取消'], //按钮
+            title: '提示'
+        }, function () {
+            console.log('删除活动' + meet_name);
+            $.ajax({
+                url: '/meet/delete/' + meet_uuid,
+                type: 'POST',
+            }).done(function (response) {
+                if (response.status === 200) {
+                    layer.msg('删除成功');
+                    window.location.href='/main/';
+                }
+                
+                
+            });
+        }, function () {
+            layer.close(index)
+        });
+    })
+
+    
         
 })

@@ -6,6 +6,8 @@ $(function () {
         if ($(this).is(':checked')) {
             $('.checkunder').prop("checked", true);
             $('.checkgrad').prop("checked", true);
+            $('.checkundergraduate').prop("checked", true);
+            $('.checkgraduate').prop("checked", true);
         } else {
             $('.checkunder').prop("checked", false);
             $('.checkgrad').prop("checked", false);
@@ -18,12 +20,15 @@ $(function () {
             $('.checkunder').prop("checked", true);
         } else {
             $('.checkunder').prop("checked", false);
+            $('.checkall').prop("checked", false);
         }
     })
     $('.checkgraduate').on('click',function () {
         if ($(this).is(':checked')) {
             $('.checkgrad').prop("checked", true);
+
         } else {
+            $('.checkall').prop("checked", false);
             $('.checkgrad').prop("checked",false);
         }
     })
