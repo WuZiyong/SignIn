@@ -30,7 +30,7 @@ def ormToJson(ormData):
 
 
 def main(request):
-    '''应用主页面渲染'''
+    '''主页面渲染'''
     #print(status)
     if not request.session.get('is_login', None):
         return redirect("/index/")
@@ -189,6 +189,9 @@ def newmeet(request):
         #将不存在的年级放入list中
         none_list = []
         none_list_zh=[]
+        if post.get('meet_begin_time') >= post.get('meet_end_time'):
+            data = {'msg': '活动开始时间不能大于结束时间!', 'status': 400}
+            return JsonResponse(data)
         #将所有需要的年级的人加起来
         for need_grade in need_grades:
             tot = getToalNum(int(need_grade))
@@ -202,6 +205,13 @@ def newmeet(request):
             for grade in none_list:
                 none_list_zh.append(grade_trans[grade-1])
         #统计人数后创建新的活动到数据库中
+        if total_num:
+            data = {
+                'msg':'请先上传学生文件',
+                'status': 404,
+            }
+            return JsonResponse(data)
+
         create=createNewMeet(meet_uuid,post.get('meet_theme'),post.get('meet_name'),post.get('meet_begin_time'),post.get('meet_end_time'),need_grade=post.get('new_need_grade'),need_num=total_num)
         if create:
             data = {
@@ -458,5 +468,24 @@ def download(request,grade):
     else:
         data = {'msg':'400'}
         return JsonResponse(data)
+
+def deletemeet(request,meet_uuid):
+    if request.method == 'POST':
+        try:
+            meet_info = Meeting.objects.get(meet_uuid=meet_uuid)
+        except Exception as e:
+            print(e)
+            data = {'msg': '活动不存在', 'status':404}
+            return JsonResponse(data)
+        meet_info.delete()
+        signin_info = Signlist.objects.filter(meet_uuid=meet_uuid)
+        if signin_info.exists():
+            signin_info.delete()
+        data = {'msg': '删除成功', 'status':200}
+        return JsonResponse(data)
+    else:
+        data = {'msg':'400'}
+        return JsonResponse(data)
+
 
 

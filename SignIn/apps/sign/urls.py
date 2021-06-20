@@ -11,6 +11,7 @@ urlpatterns = [
     path('sign/newmeet/', views.newmeet, name='newmeet'),
     path('sign/newsign/', views.newsign, name='newmeet'),
     path('meet/download/', views.meetdownload, name='newmeet'),
+    path('meet/delete/<meet_uuid>', views.deletemeet, name='newmeet'),
     
     
 ]
