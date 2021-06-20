@@ -49,22 +49,22 @@ def register(request):
 
             if password1 != password2:  # 判断两次密码是否相同
                 message = "两次输入的密码不一致！❌"
-                return render(request, 'login/register.html', locals())
+                return render(request, 'register.pug', locals())
             else:
                 same_name_user = User.objects.filter(name=username)
                 if User.objects.filter(teach_id=teach_id):  # 用户名唯一
                     message = '这个账号已被注册🌝'
-                    return render(request, 'login/register.pug', locals())
+                    return render(request, 'register.pug', locals())
                 if email.split('@')[-1][-12:] != '.sysu.edu.cn':
                     message = '请输入正确的中大邮箱🌚'
-                    return render(request, 'login/register.pug', locals())
+                    return render(request, 'register.pug', locals())
                 if User.objects.filter(email=email):
                     message = '这个中大邮箱已被注册🌝'
-                    return render(request, 'login/register.pug', locals())
+                    return render(request, 'register.pug', locals())
                 same_email_user = User.objects.filter(email=email)
                 if same_email_user:  # 邮箱地址唯一
                     message = '该邮箱地址已被注册，请使用别的邮箱！😅'
-                    return render(request, 'login/register.pug', locals())
+                    return render(request, 'register.pug', locals())
 
                 # 当一切都OK的情况下，创建新用户
                 # print("\n\n\nteach_id ", teach_id)
